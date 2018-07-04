@@ -1,7 +1,11 @@
 import * as React from "react";
 import { LayoutChangeEvent, View, ViewProperties } from "react-native";
 import { Dimension } from "../../../core/dependencies/LayoutProvider";
-import BaseViewRenderer, { ViewRendererProps } from "../../../core/viewrenderer/BaseViewRenderer";
+import BaseViewRenderer, {
+  ViewRendererProps,
+} from "../../../core/viewrenderer/BaseViewRenderer";
+// import ViewOverflow from "react-native-view-overflow";
+// const ViewOverflow = View;
 
 /***
  * View renderer is responsible for creating a container of size provided by LayoutProvider and render content inside it.
@@ -10,65 +14,81 @@ import BaseViewRenderer, { ViewRendererProps } from "../../../core/viewrenderer/
  * This is second of the two things recycler works on. Implemented both for web and react native.
  */
 export default class ViewRenderer extends BaseViewRenderer<any> {
-    private _dim: Dimension = { width: 0, height: 0 };
-    private _viewRef: React.Component<ViewProperties, React.ComponentState> | null = null;
+  private _dim: Dimension = { width: 0, height: 0 };
+  private _viewRef: React.Component<
+    ViewProperties,
+    React.ComponentState
+  > | null = null;
 
-    constructor(props: ViewRendererProps<any>) {
-        super(props);
-        this._onLayout = this._onLayout.bind(this);
-        this._setRef = this._setRef.bind(this);
-    }
+  constructor(props: ViewRendererProps<any>) {
+    super(props);
+    this._onLayout = this._onLayout.bind(this);
+    this._setRef = this._setRef.bind(this);
+  }
 
-    public render(): JSX.Element {
-        return this.props.forceNonDeterministicRendering ? (
-            <View ref={this._setRef}
-            onLayout={this._onLayout}
-                style={{
-                    flexDirection: this.props.isHorizontal ? "column" : "row",
-                    left: this.props.x,
-                    position: "absolute",
-                    top: this.props.y,
-                    ...this.props.styleOverrides,
-                    ...this.animatorStyleOverrides,
-                }}>
-                {this.renderChild()}
-            </View>
-        ) : (
-                <View ref={this._setRef}
-                    style={{
-                        left: this.props.x,
-                        position: "absolute",
-                        top: this.props.y,
-                        height: this.props.height,
-                        width: this.props.width,
-                        ...this.props.styleOverrides,
-                        ...this.animatorStyleOverrides,
-                    }}>
-                    {this.renderChild()}
-                </View>
-            );
-    }
+  public render(): JSX.Element {
+    return this.props.forceNonDeterministicRendering ? (
+      <View
+        ref={this._setRef}
+        onLayout={this._onLayout}
+        style={{
+          flexDirection: this.props.isHorizontal ? "column" : "row",
+          left: this.props.x,
+          position: "absolute",
+          top: this.props.y,
+          zIndex: this.props.data.focus ? 10000 : undefined,
+          overflow: "visible",
+          ...this.props.styleOverrides,
+          ...this.animatorStyleOverrides,
+        }}
+      >
+        {this.renderChild()}
+      </View>
+    ) : (
+      <View
+        ref={this._setRef}
+        style={{
+          overflow: "visible",
+          left: this.props.x,
+          position: "absolute",
+          top: this.props.y,
+          height: this.props.height,
+          width: this.props.width,
+          zIndex: this.props.data.focus ? 10000 : undefined,
+          ...this.props.styleOverrides,
+          ...this.animatorStyleOverrides,
+        }}
+      >
+        {this.renderChild()}
+      </View>
+    );
+  }
 
-    protected getRef(): object | null {
-        return this._viewRef;
-    }
+  protected getRef(): object | null {
+    return this._viewRef;
+  }
 
-    private _setRef(view: React.Component<ViewProperties, React.ComponentState> | null): void {
-        this._viewRef = view;
-    }
+  private _setRef(
+    view: React.Component<ViewProperties, React.ComponentState> | null
+  ): void {
+    this._viewRef = view;
+  }
 
-    private _onLayout(event: LayoutChangeEvent): void {
-        //Preventing layout thrashing in super fast scrolls where RN messes up onLayout event
-        const xDiff = Math.abs(this.props.x - event.nativeEvent.layout.x);
-        const yDiff = Math.abs(this.props.y - event.nativeEvent.layout.y);
-        if (xDiff < 1 && yDiff < 1 &&
-            (this.props.height !== event.nativeEvent.layout.height ||
-                this.props.width !== event.nativeEvent.layout.width)) {
-            this._dim.height = event.nativeEvent.layout.height;
-            this._dim.width = event.nativeEvent.layout.width;
-            if (this.props.onSizeChanged) {
-                this.props.onSizeChanged(this._dim, this.props.index);
-            }
-        }
+  private _onLayout(event: LayoutChangeEvent): void {
+    //Preventing layout thrashing in super fast scrolls where RN messes up onLayout event
+    const xDiff = Math.abs(this.props.x - event.nativeEvent.layout.x);
+    const yDiff = Math.abs(this.props.y - event.nativeEvent.layout.y);
+    if (
+      xDiff < 1 &&
+      yDiff < 1 &&
+      (this.props.height !== event.nativeEvent.layout.height ||
+        this.props.width !== event.nativeEvent.layout.width)
+    ) {
+      this._dim.height = event.nativeEvent.layout.height;
+      this._dim.width = event.nativeEvent.layout.width;
+      if (this.props.onSizeChanged) {
+        this.props.onSizeChanged(this._dim, this.props.index);
+      }
     }
+  }
 }
