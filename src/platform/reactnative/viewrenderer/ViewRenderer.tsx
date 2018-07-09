@@ -4,8 +4,11 @@ import { Dimension } from "../../../core/dependencies/LayoutProvider";
 import BaseViewRenderer, {
   ViewRendererProps,
 } from "../../../core/viewrenderer/BaseViewRenderer";
+
+import { GetWrapperClass } from "../../../utils/WrapperClass";
+
 // import ViewOverflow from "react-native-view-overflow";
-// const ViewOverflow = View;
+// const ViewOverflow: any = View;
 
 /***
  * View renderer is responsible for creating a container of size provided by LayoutProvider and render content inside it.
@@ -27,8 +30,9 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
   }
 
   public render(): JSX.Element {
+    const ViewOverflow: any = GetWrapperClass();
     return this.props.forceNonDeterministicRendering ? (
-      <View
+      <ViewOverflow
         ref={this._setRef}
         onLayout={this._onLayout}
         style={{
@@ -43,9 +47,9 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         }}
       >
         {this.renderChild()}
-      </View>
+      </ViewOverflow>
     ) : (
-      <View
+      <ViewOverflow
         ref={this._setRef}
         style={{
           overflow: "visible",
@@ -60,7 +64,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         }}
       >
         {this.renderChild()}
-      </View>
+      </ViewOverflow>
     );
   }
 
