@@ -32,7 +32,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
   public render(): JSX.Element {
     const ViewOverflow: any = GetWrapperClass();
     return this.props.forceNonDeterministicRendering ? (
-      <ViewOverflow
+      <View
         ref={this._setRef}
         onLayout={this._onLayout}
         style={{
@@ -41,13 +41,13 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
           position: "absolute",
           top: this.props.y,
           zIndex: this.props.data.focus ? 10000 : undefined,
-          overflow: "visible",
+          // overflow: "visible",
           ...this.props.styleOverrides,
           ...this.animatorStyleOverrides,
         }}
       >
         {this.renderChild()}
-      </ViewOverflow>
+      </View>
     ) : (
       <ViewOverflow
         ref={this._setRef}
