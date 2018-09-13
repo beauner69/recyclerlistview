@@ -7,6 +7,9 @@
 -   [BaseLayoutProvider](#baselayoutprovider)
 -   [BaseLayoutProvider](#baselayoutprovider-1)
 -   [BaseLayoutProvider](#baselayoutprovider-2)
+-   [BaseItemAnimator](#baseitemanimator)
+-   [LayoutManager](#layoutmanager)
+-   [LayoutManager](#layoutmanager-1)
 -   [Component](#component)
 -   [Component](#component-1)
 -   [Component](#component-2)
@@ -21,16 +24,11 @@
 -   [default](#default-1)
 -   [DefaultJSItemAnimator](#defaultjsitemanimator)
 -   [DefaultJSItemAnimator](#defaultjsitemanimator-1)
--   [BaseItemAnimator](#baseitemanimator)
 -   [AutoScroll](#autoscroll)
--   [LayoutManager](#layoutmanager)
--   [LayoutManager](#layoutmanager-1)
 
 ## ContextProvider
 
 ## DataProvider
-
-## BaseLayoutProvider
 
 ## BaseLayoutProvider
 
@@ -47,6 +45,14 @@ This patters ensures that your scrolling is as smooth as it gets. You can always
 NOTE: You can also implement features such as ListView/GridView switch by simple changing your layout provider.
 
 ## BaseLayoutProvider
+
+## BaseLayoutProvider
+
+## BaseItemAnimator
+
+## LayoutManager
+
+## LayoutManager
 
 ## Component
 
@@ -82,10 +88,4 @@ unstable on Android and to avoid unnecessary interference with developer flow. I
 you need to. Check DefaultNativeItemAnimator for inspiration. LayoutAnimation definitely gives better performance but is
 hardly customizable.
 
-## BaseItemAnimator
-
 ## AutoScroll
-
-## LayoutManager
-
-## LayoutManager
