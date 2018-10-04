@@ -4,6 +4,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
+  Animated,
   View,
 } from "react-native";
 import BaseScrollComponent, {
@@ -20,7 +21,7 @@ export default class ScrollComponent extends BaseScrollComponent {
   public static defaultProps = {
     contentHeight: 0,
     contentWidth: 0,
-    externalScrollView: TSCast.cast(ScrollView), //TSI
+    externalScrollView: TSCast.cast(Animated.ScrollView), //TSI
     isHorizontal: false,
     scrollThrottle: 16,
   };
@@ -74,16 +75,35 @@ export default class ScrollComponent extends BaseScrollComponent {
       onSizeChanged,
       ...props
     } = this.props as any;
+
+    // Second wave of crowbars - animation. Fuck yeah
+    let onscroll = this._onScroll;
+    if ((this.props as any).onScrollAnim) {
+      onscroll = Animated.event(
+        [
+          {
+            nativeEvent: {
+              contentOffset: { y: (this.props as any).onScrollAnim },
+            },
+          },
+        ],
+        {
+          // listener: this._onScroll,
+          useNativeDriver: true,
+        } as any
+      );
+    }
+
     return (
       <Scroller
         ref={(scrollView: any) =>
           (this._scrollViewRef = scrollView as ScrollView | null)
         }
         removeClippedSubviews={false}
-        scrollEventThrottle={this.props.scrollThrottle}
+        scrollEventThrottle={1}
         {...props}
         horizontal={this.props.isHorizontal}
-        onScroll={this._onScroll}
+        onScroll={onscroll}
         onLayout={
           !this._isSizeChangedCalledOnce || this.props.canChangeSize
             ? this._onLayout
