@@ -2,29 +2,29 @@
 
 ### Table of Contents
 
--   [ContextProvider](#contextprovider)
--   [DataProvider](#dataprovider)
--   [BaseLayoutProvider](#baselayoutprovider)
--   [BaseLayoutProvider](#baselayoutprovider-1)
--   [BaseLayoutProvider](#baselayoutprovider-2)
--   [BaseItemAnimator](#baseitemanimator)
--   [LayoutManager](#layoutmanager)
--   [LayoutManager](#layoutmanager-1)
--   [Component](#component)
--   [Component](#component-1)
--   [Component](#component-2)
--   [Component](#component-3)
--   [Error](#error)
--   [VirtualRenderer](#virtualrenderer)
--   [RecycleItemPool](#recycleitempool)
--   [ViewabilityTracker](#viewabilitytracker)
--   [BinarySearch](#binarysearch)
--   [TSCast](#tscast)
--   [default](#default)
--   [default](#default-1)
--   [DefaultJSItemAnimator](#defaultjsitemanimator)
--   [DefaultJSItemAnimator](#defaultjsitemanimator-1)
--   [AutoScroll](#autoscroll)
+-   [ContextProvider][1]
+-   [DataProvider][2]
+-   [BaseLayoutProvider][3]
+-   [BaseLayoutProvider][4]
+-   [BaseLayoutProvider][5]
+-   [BaseItemAnimator][6]
+-   [LayoutManager][7]
+-   [LayoutManager][8]
+-   [Component][9]
+-   [Component][10]
+-   [Component][11]
+-   [Component][12]
+-   [Error][13]
+-   [VirtualRenderer][14]
+-   [RecycleItemPool][15]
+-   [ViewabilityTracker][16]
+-   [BinarySearch][17]
+-   [TSCast][18]
+-   [default][19]
+-   [default][20]
+-   [DefaultJSItemAnimator][21]
+-   [DefaultJSItemAnimator][22]
+-   [AutoScroll][23]
 
 ## ContextProvider
 
@@ -89,3 +89,49 @@ you need to. Check DefaultNativeItemAnimator for inspiration. LayoutAnimation de
 hardly customizable.
 
 ## AutoScroll
+
+[1]: #contextprovider
+
+[2]: #dataprovider
+
+[3]: #baselayoutprovider
+
+[4]: #baselayoutprovider-1
+
+[5]: #baselayoutprovider-2
+
+[6]: #baseitemanimator
+
+[7]: #layoutmanager
+
+[8]: #layoutmanager-1
+
+[9]: #component
+
+[10]: #component-1
+
+[11]: #component-2
+
+[12]: #component-3
+
+[13]: #error
+
+[14]: #virtualrenderer
+
+[15]: #recycleitempool
+
+[16]: #viewabilitytracker
+
+[17]: #binarysearch
+
+[18]: #tscast
+
+[19]: #default
+
+[20]: #default-1
+
+[21]: #defaultjsitemanimator
+
+[22]: #defaultjsitemanimator-1
+
+[23]: #autoscroll
