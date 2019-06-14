@@ -19,6 +19,7 @@ export default class ViewabilityTracker {
     public onEngagedRowsChanged: TOnItemStatusChanged | null;
 
     private _currentOffset: number;
+    private _actualOffset: number;
     private _maxOffset: number;
     private _renderAheadOffset: number;
     private _visibleWindow: Range;
@@ -32,6 +33,7 @@ export default class ViewabilityTracker {
 
     constructor(renderAheadOffset: number, initialOffset: number) {
         this._currentOffset = Math.max(0, initialOffset);
+        this._actualOffset = this._currentOffset;
         this._maxOffset = 0;
         this._renderAheadOffset = renderAheadOffset;
         this._visibleWindow = { start: 0, end: 0 };
@@ -47,8 +49,6 @@ export default class ViewabilityTracker {
         this.onEngagedRowsChanged = null;
 
         this._relevantDim = { start: 0, end: 0 };
-
-        this._valueExtractorForBinarySearch = this._valueExtractorForBinarySearch.bind(this);
     }
 
     public init(): void {
@@ -77,6 +77,7 @@ export default class ViewabilityTracker {
     }
 
     public updateOffset(offset: number): void {
+        this._actualOffset = offset;
         offset = Math.min(this._maxOffset, Math.max(0, offset));
         if (this._currentOffset !== offset) {
             this._currentOffset = offset;
@@ -91,6 +92,10 @@ export default class ViewabilityTracker {
 
     public getLastOffset(): number {
         return this._currentOffset;
+    }
+
+    public getLastActualOffset(): number {
+        return this._actualOffset;
     }
 
     public getEngagedIndexes(): number[] {
@@ -116,6 +121,15 @@ export default class ViewabilityTracker {
             }
         }
         return result;
+    }
+
+    public updateRenderAheadOffset(renderAheadOffset: number): void {
+        this._renderAheadOffset = Math.max(0, renderAheadOffset);
+        this.forceRefreshWithOffset(this._currentOffset);
+    }
+
+    public getCurrentRenderAheadOffset(): number {
+        return this._renderAheadOffset;
     }
 
     private _findFirstVisibleIndexOptimally(): number {
@@ -166,7 +180,7 @@ export default class ViewabilityTracker {
         return BinarySearch.findClosestHigherValueIndex(count, this._visibleWindow.start + bias, this._valueExtractorForBinarySearch);
     }
 
-    private _valueExtractorForBinarySearch(index: number): number {
+    private _valueExtractorForBinarySearch = (index: number): number => {
         const itemRect = this._layouts[index];
         this._setRelevantBounds(itemRect, this._relevantDim);
         return this._relevantDim.end;

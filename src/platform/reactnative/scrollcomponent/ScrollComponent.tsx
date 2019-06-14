@@ -32,12 +32,8 @@ export default class ScrollComponent extends BaseScrollComponent {
 
   constructor(args: ScrollComponentProps) {
     super(args);
-    this._onScroll = this._onScroll.bind(this);
-    this._onLayout = this._onLayout.bind(this);
-
     this._height = 0;
     this._width = 0;
-
     this._isSizeChangedCalledOnce = false;
   }
 
@@ -50,38 +46,23 @@ export default class ScrollComponent extends BaseScrollComponent {
   public render(): JSX.Element {
     const Scroller = TSCast.cast<ScrollView>(this.props.externalScrollView); //TSI
     //TODO:Talha
-    // BNC crowbarred this quite aggressively. If the main branch has since fixed this then you should probably use theirs.
-    const {
-      useWindowScroll,
-      contentHeight,
-      contentWidth,
-      externalScrollView,
-      canChangeSize,
-      renderFooter,
-      isHorizontal,
-      scrollThrottle,
-      initialOffset,
-      layoutProvider,
-      dataProvider,
-      rowRenderer,
-      forceNonDeterministicRendering,
-      renderAheadOffset,
-      itemAnimator,
-      disableRecycling,
-      initialRenderIndex,
-      onEndReachedThreshold,
-      distanceFromWindow,
-      onSizeChanged,
-      ...props
-    } = this.props as any;
+    // const {
+    //     useWindowScroll,
+    //     contentHeight,
+    //     contentWidth,
+    //     externalScrollView,
+    //     canChangeSize,
+    //     renderFooter,
+    //     isHorizontal,
+    //     scrollThrottle,
+    //     ...props,
+    // } = this.props;
     return (
       <Scroller
-        ref={(scrollView: any) =>
-          (this._scrollViewRef = scrollView as ScrollView | null)
-        }
+        ref={this._getScrollViewRef}
         removeClippedSubviews={false}
         scrollEventThrottle={this.props.scrollThrottle}
-        {...props}
+        {...this.props}
         horizontal={this.props.isHorizontal}
         onScroll={this._onScroll}
         onLayout={
@@ -107,7 +88,13 @@ export default class ScrollComponent extends BaseScrollComponent {
     );
   }
 
-  private _onScroll(event?: NativeSyntheticEvent<NativeScrollEvent>): void {
+  private _getScrollViewRef = (scrollView: any) => {
+    this._scrollViewRef = scrollView as (ScrollView | null);
+  };
+
+  private _onScroll = (
+    event?: NativeSyntheticEvent<NativeScrollEvent>
+  ): void => {
     if (event) {
       this.props.onScroll(
         event.nativeEvent.contentOffset.x,
@@ -115,9 +102,9 @@ export default class ScrollComponent extends BaseScrollComponent {
         event
       );
     }
-  }
+  };
 
-  private _onLayout(event: LayoutChangeEvent): void {
+  private _onLayout = (event: LayoutChangeEvent): void => {
     if (
       this._height !== event.nativeEvent.layout.height ||
       this._width !== event.nativeEvent.layout.width
@@ -132,5 +119,5 @@ export default class ScrollComponent extends BaseScrollComponent {
     if (this.props.onLayout) {
       this.props.onLayout(event);
     }
-  }
+  };
 }

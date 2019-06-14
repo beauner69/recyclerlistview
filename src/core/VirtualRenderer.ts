@@ -32,7 +32,7 @@ export type StableIdProvider = (index: number) => string;
 
 export default class VirtualRenderer {
 
-    public onVisibleItemsChanged: TOnItemStatusChanged | null;
+    private onVisibleItemsChanged: TOnItemStatusChanged | null;
 
     private _scrollOnNextUpdate: (point: Point) => void;
     private _stableIdToRenderKeyMap: { [key: string]: StableIdMapItem | undefined };
@@ -77,8 +77,6 @@ export default class VirtualRenderer {
         this._startKey = 0;
 
         this.onVisibleItemsChanged = null;
-        this._onEngagedItemsChanged = this._onEngagedItemsChanged.bind(this);
-        this._onVisibleItemsChanged = this._onVisibleItemsChanged.bind(this);
     }
 
     public getLayoutDimension(): Dimension {
@@ -228,7 +226,8 @@ export default class VirtualRenderer {
                 key = getStableId(index);
                 if (renderStack[key]) {
                     //Probable collision, warn and avoid
-                    console.warn("Possible stableId collision @", index); //tslint:disable-line
+                    //TODO: Disabled incorrectly triggering in some cases
+                    //console.warn("Possible stableId collision @", index); //tslint:disable-line
                     key = this._getCollisionAvoidingKey();
                 }
                 renderStack[key] = { dataIndex: index };
@@ -339,13 +338,13 @@ export default class VirtualRenderer {
         }
     }
 
-    private _onVisibleItemsChanged(all: number[], now: number[], notNow: number[]): void {
+    private _onVisibleItemsChanged = (all: number[], now: number[], notNow: number[]): void => {
         if (this.onVisibleItemsChanged) {
             this.onVisibleItemsChanged(all, now, notNow);
         }
     }
 
-    private _onEngagedItemsChanged(all: number[], now: number[], notNow: number[]): void {
+    private _onEngagedItemsChanged = (all: number[], now: number[], notNow: number[]): void => {
         const count = notNow.length;
         let resolvedKey;
         let disengagedIndex = 0;

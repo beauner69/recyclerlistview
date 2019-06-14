@@ -5,11 +5,7 @@ import BaseViewRenderer, {
   ViewRendererProps,
 } from "../../../core/viewrenderer/BaseViewRenderer";
 
-import { GetWrapperClass } from "../../../utils/WrapperClass";
-
-// import ViewOverflow from "react-native-view-overflow";
-// const ViewOverflow: any = View;
-
+import { GetWrapperClass } from "../../../utils/WrapperClass"; //BNC
 /***
  * View renderer is responsible for creating a container of size provided by LayoutProvider and render content inside it.
  * Also enforces a logic to prevent re renders. RecyclerListView keeps moving these ViewRendereres around using transforms to enable recycling.
@@ -22,15 +18,8 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
     ViewProperties,
     React.ComponentState
   > | null = null;
-
-  constructor(props: ViewRendererProps<any>) {
-    super(props);
-    this._onLayout = this._onLayout.bind(this);
-    this._setRef = this._setRef.bind(this);
-  }
-
   public render(): JSX.Element {
-    const ViewOverflow: any = GetWrapperClass();
+    const ViewOverflow: any = GetWrapperClass(); //BNC
     return this.props.forceNonDeterministicRendering ? (
       <View
         ref={this._setRef}
@@ -40,8 +29,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
           left: this.props.x,
           position: "absolute",
           top: this.props.y,
-          zIndex: this.props.data.focus ? 10000 : undefined,
-          // overflow: "visible",
+          zIndex: this.props.data.focus ? 10000 : undefined, //BNC
           ...this.props.styleOverrides,
           ...this.animatorStyleOverrides,
         }}
@@ -49,22 +37,22 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         {this.renderChild()}
       </View>
     ) : (
-      <ViewOverflow
+      <ViewOverflow //BNC
         ref={this._setRef}
         style={{
-          overflow: "visible",
+          overflow: "wisible", //BNC
           left: this.props.x,
           position: "absolute",
           top: this.props.y,
           height: this.props.height,
           width: this.props.width,
-          zIndex: this.props.data.focus ? 10000 : undefined,
+          zIndex: this.props.data.focus ? 10000 : undefined, // BNC
           ...this.props.styleOverrides,
           ...this.animatorStyleOverrides,
         }}
       >
         {this.renderChild()}
-      </ViewOverflow>
+      </ViewOverflow> //BNC
     );
   }
 
@@ -72,13 +60,13 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
     return this._viewRef;
   }
 
-  private _setRef(
+  private _setRef = (
     view: React.Component<ViewProperties, React.ComponentState> | null
-  ): void {
+  ): void => {
     this._viewRef = view;
-  }
+  };
 
-  private _onLayout(event: LayoutChangeEvent): void {
+  private _onLayout = (event: LayoutChangeEvent): void => {
     //Preventing layout thrashing in super fast scrolls where RN messes up onLayout event
     const xDiff = Math.abs(this.props.x - event.nativeEvent.layout.x);
     const yDiff = Math.abs(this.props.y - event.nativeEvent.layout.y);
@@ -94,5 +82,5 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         this.props.onSizeChanged(this._dim, this.props.index);
       }
     }
-  }
+  };
 }
