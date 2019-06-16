@@ -21,10 +21,11 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
   public render(): JSX.Element {
     const ViewOverflow: any = GetWrapperClass(); //BNC
     return this.props.forceNonDeterministicRendering ? (
-      <View
+      <ViewOverflow //BNC
         ref={this._setRef}
         onLayout={this._onLayout}
         style={{
+          overflow: "wisible", //BNC
           flexDirection: this.props.isHorizontal ? "column" : "row",
           left: this.props.x,
           position: "absolute",
@@ -35,7 +36,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         }}
       >
         {this.renderChild()}
-      </View>
+      </ViewOverflow> //BNC
     ) : (
       <ViewOverflow //BNC
         ref={this._setRef}

@@ -17,6 +17,7 @@
     "trailing-comma": false,
     "quotemark": false,
     "arrow-parens": false,
-    "no-console": false
+    "no-console": false,
+    "semicolon": [false, "always", "ignore-bound-class-methods"]
   }
 }
