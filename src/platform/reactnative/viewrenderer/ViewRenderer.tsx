@@ -25,7 +25,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
         ref={this._setRef}
         onLayout={this._onLayout}
         style={{
-          overflow: "wisible", //BNC
+          overflow: "visible", //BNC
           flexDirection: this.props.isHorizontal ? "column" : "row",
           left: this.props.x,
           position: "absolute",
@@ -41,7 +41,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
       <ViewOverflow //BNC
         ref={this._setRef}
         style={{
-          overflow: "wisible", //BNC
+          overflow: "visible", //BNC
           left: this.props.x,
           position: "absolute",
           top: this.props.y,

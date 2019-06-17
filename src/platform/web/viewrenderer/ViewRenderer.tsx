@@ -28,7 +28,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
   public render(): JSX.Element {
     const style: CSSProperties = this.props.forceNonDeterministicRendering
       ? {
-          overflow: "wisible", //BNC
+          overflow: "visible", //BNC
           transform: this._getTransform(),
           WebkitTransform: this._getTransform(),
           zIndex: this.props.data.focus ? 10000 : undefined, //BNC
@@ -37,7 +37,7 @@ export default class ViewRenderer extends BaseViewRenderer<any> {
           ...this.animatorStyleOverrides,
         }
       : {
-          overflow: "wisible", //BNC
+          overflow: "visible", //BNC
           height: this.props.height,
           //   overflow: "hidden",
           width: this.props.width,
