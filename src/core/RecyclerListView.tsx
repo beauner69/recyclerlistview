@@ -734,102 +734,102 @@ export default class RecyclerListView<
   }
 }
 
-RecyclerListView.propTypes = {
-  //Refer the sample
-  layoutProvider: PropTypes.instanceOf(BaseLayoutProvider).isRequired,
+// RecyclerListView.propTypes = {
+//   //Refer the sample
+//   layoutProvider: PropTypes.instanceOf(BaseLayoutProvider).isRequired,
 
-  //Refer the sample
-  dataProvider: PropTypes.instanceOf(DataProvider).isRequired,
+//   //Refer the sample
+//   dataProvider: PropTypes.instanceOf(DataProvider).isRequired,
 
-  //Used to maintain scroll position in case view gets destroyed e.g, cases of back navigation
-  contextProvider: PropTypes.instanceOf(ContextProvider),
+//   //Used to maintain scroll position in case view gets destroyed e.g, cases of back navigation
+//   contextProvider: PropTypes.instanceOf(ContextProvider),
 
-  //Methods which returns react component to be rendered. You get type of view and data in the callback.
-  rowRenderer: PropTypes.func.isRequired,
+//   //Methods which returns react component to be rendered. You get type of view and data in the callback.
+//   rowRenderer: PropTypes.func.isRequired,
 
-  //Initial offset you want to start rendering from, very useful if you want to maintain scroll context across pages.
-  initialOffset: PropTypes.number,
+//   //Initial offset you want to start rendering from, very useful if you want to maintain scroll context across pages.
+//   initialOffset: PropTypes.number,
 
-  //Specify how many pixels in advance do you want views to be rendered. Increasing this value can help reduce blanks (if any). However keeping this as low
-  //as possible should be the intent. Higher values also increase re-render compute
-  renderAheadOffset: PropTypes.number,
+//   //Specify how many pixels in advance do you want views to be rendered. Increasing this value can help reduce blanks (if any). However keeping this as low
+//   //as possible should be the intent. Higher values also increase re-render compute
+//   renderAheadOffset: PropTypes.number,
 
-  //Whether the listview is horizontally scrollable. Both use staggeredGrid implementation
-  isHorizontal: PropTypes.bool,
+//   //Whether the listview is horizontally scrollable. Both use staggeredGrid implementation
+//   isHorizontal: PropTypes.bool,
 
-  //On scroll callback onScroll(rawEvent, offsetX, offsetY), note you get offsets no need to read scrollTop/scrollLeft
-  onScroll: PropTypes.func,
+//   //On scroll callback onScroll(rawEvent, offsetX, offsetY), note you get offsets no need to read scrollTop/scrollLeft
+//   onScroll: PropTypes.func,
 
-  //callback onRecreate(params), when recreating recycler view from context provider. Gives you the initial params in the first
-  //frame itself to allow you to render content accordingly
-  onRecreate: PropTypes.func,
+//   //callback onRecreate(params), when recreating recycler view from context provider. Gives you the initial params in the first
+//   //frame itself to allow you to render content accordingly
+//   onRecreate: PropTypes.func,
 
-  //Provide your own ScrollView Component. The contract for the scroll event should match the native scroll event contract, i.e.
-  // scrollEvent = { nativeEvent: { contentOffset: { x: offset, y: offset } } }
-  //Note: Please extend BaseScrollView to achieve expected behaviour
-  externalScrollView: PropTypes.func,
+//   //Provide your own ScrollView Component. The contract for the scroll event should match the native scroll event contract, i.e.
+//   // scrollEvent = { nativeEvent: { contentOffset: { x: offset, y: offset } } }
+//   //Note: Please extend BaseScrollView to achieve expected behaviour
+//   externalScrollView: PropTypes.func,
 
-  //Callback given when user scrolls to the end of the list or footer just becomes visible, useful in incremental loading scenarios
-  onEndReached: PropTypes.func,
+//   //Callback given when user scrolls to the end of the list or footer just becomes visible, useful in incremental loading scenarios
+//   onEndReached: PropTypes.func,
 
-  //Specify how many pixels in advance you onEndReached callback
-  onEndReachedThreshold: PropTypes.number,
+//   //Specify how many pixels in advance you onEndReached callback
+//   onEndReachedThreshold: PropTypes.number,
 
-  //Deprecated. Please use onVisibleIndicesChanged instead.
-  onVisibleIndexesChanged: PropTypes.func,
+//   //Deprecated. Please use onVisibleIndicesChanged instead.
+//   onVisibleIndexesChanged: PropTypes.func,
 
-  //Provides visible index, helpful in sending impression events etc, onVisibleIndicesChanged(all, now, notNow)
-  onVisibleIndicesChanged: PropTypes.func,
+//   //Provides visible index, helpful in sending impression events etc, onVisibleIndicesChanged(all, now, notNow)
+//   onVisibleIndicesChanged: PropTypes.func,
 
-  //Provide this method if you want to render a footer. Helpful in showing a loader while doing incremental loads.
-  renderFooter: PropTypes.func,
+//   //Provide this method if you want to render a footer. Helpful in showing a loader while doing incremental loads.
+//   renderFooter: PropTypes.func,
 
-  //Specify the initial item index you want rendering to start from. Preferred over initialOffset if both are specified.
-  initialRenderIndex: PropTypes.number,
+//   //Specify the initial item index you want rendering to start from. Preferred over initialOffset if both are specified.
+//   initialRenderIndex: PropTypes.number,
 
-  //iOS only. Scroll throttle duration.
-  scrollThrottle: PropTypes.number,
+//   //iOS only. Scroll throttle duration.
+//   scrollThrottle: PropTypes.number,
 
-  //Specify if size can change, listview will automatically relayout items. For web, works only with useWindowScroll = true
-  canChangeSize: PropTypes.bool,
+//   //Specify if size can change, listview will automatically relayout items. For web, works only with useWindowScroll = true
+//   canChangeSize: PropTypes.bool,
 
-  //Specify how far away the first list item is from start of the RecyclerListView. e.g, if you have content padding on top or left.
-  //This is an adjustment for optimization and to make sure onVisibileIndexesChanged callback is correct.
-  //Ideally try to avoid setting large padding values on RLV content. If you have to please correct offsets reported, handle
-  //them in a custom ScrollView and pass it as an externalScrollView.
-  distanceFromWindow: PropTypes.number,
+//   //Specify how far away the first list item is from start of the RecyclerListView. e.g, if you have content padding on top or left.
+//   //This is an adjustment for optimization and to make sure onVisibileIndexesChanged callback is correct.
+//   //Ideally try to avoid setting large padding values on RLV content. If you have to please correct offsets reported, handle
+//   //them in a custom ScrollView and pass it as an externalScrollView.
+//   distanceFromWindow: PropTypes.number,
 
-  //Web only. Layout elements in window instead of a scrollable div.
-  useWindowScroll: PropTypes.bool,
+//   //Web only. Layout elements in window instead of a scrollable div.
+//   useWindowScroll: PropTypes.bool,
 
-  //Turns off recycling. You still get progressive rendering and all other features. Good for lazy rendering. This should not be used in most cases.
-  disableRecycling: PropTypes.bool,
+//   //Turns off recycling. You still get progressive rendering and all other features. Good for lazy rendering. This should not be used in most cases.
+//   disableRecycling: PropTypes.bool,
 
-  //Default is false, if enabled dimensions provided in layout provider will not be strictly enforced.
-  //Rendered dimensions will be used to relayout items. Slower if enabled.
-  forceNonDeterministicRendering: PropTypes.bool,
+//   //Default is false, if enabled dimensions provided in layout provider will not be strictly enforced.
+//   //Rendered dimensions will be used to relayout items. Slower if enabled.
+//   forceNonDeterministicRendering: PropTypes.bool,
 
-  //In some cases the data passed at row level may not contain all the info that the item depends upon, you can keep all other info
-  //outside and pass it down via this prop. Changing this object will cause everything to re-render. Make sure you don't change
-  //it often to ensure performance. Re-renders are heavy.
-  extendedState: PropTypes.object,
+//   //In some cases the data passed at row level may not contain all the info that the item depends upon, you can keep all other info
+//   //outside and pass it down via this prop. Changing this object will cause everything to re-render. Make sure you don't change
+//   //it often to ensure performance. Re-renders are heavy.
+//   extendedState: PropTypes.object,
 
-  //Enables animating RecyclerListView item cells e.g, shift, add, remove etc. This prop can be used to pass an external item animation implementation.
-  //Look into BaseItemAnimator/DefaultJSItemAnimator/DefaultNativeItemAnimator/DefaultWebItemAnimator for more info.
-  //By default there are few animations, to disable completely simply pass blank new BaseItemAnimator() object. Remember, create
-  //one object and keep it do not create multiple object of type BaseItemAnimator.
-  //Note: You might want to look into DefaultNativeItemAnimator to check an implementation based on LayoutAnimation. By default,
-  //animations are JS driven to avoid workflow interference. Also, please note LayoutAnimation is buggy on Android.
-  itemAnimator: PropTypes.instanceOf(BaseItemAnimator),
+//   //Enables animating RecyclerListView item cells e.g, shift, add, remove etc. This prop can be used to pass an external item animation implementation.
+//   //Look into BaseItemAnimator/DefaultJSItemAnimator/DefaultNativeItemAnimator/DefaultWebItemAnimator for more info.
+//   //By default there are few animations, to disable completely simply pass blank new BaseItemAnimator() object. Remember, create
+//   //one object and keep it do not create multiple object of type BaseItemAnimator.
+//   //Note: You might want to look into DefaultNativeItemAnimator to check an implementation based on LayoutAnimation. By default,
+//   //animations are JS driven to avoid workflow interference. Also, please note LayoutAnimation is buggy on Android.
+//   itemAnimator: PropTypes.instanceOf(BaseItemAnimator),
 
-  //Enables you to utilize layout animations better by unmounting removed items. Please note, this might increase unmounts
-  //on large data changes.
-  optimizeForInsertDeleteAnimations: PropTypes.bool,
+//   //Enables you to utilize layout animations better by unmounting removed items. Please note, this might increase unmounts
+//   //on large data changes.
+//   optimizeForInsertDeleteAnimations: PropTypes.bool,
 
-  //To pass down style to inner ScrollView
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-  //For TS use case, not necessary with JS use.
-  //For all props that need to be proxied to inner/external scrollview. Put them in an object and they'll be spread
-  //and passed down.
-  scrollViewProps: PropTypes.object,
-};
+//   //To pass down style to inner ScrollView
+//   style: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+//   //For TS use case, not necessary with JS use.
+//   //For all props that need to be proxied to inner/external scrollview. Put them in an object and they'll be spread
+//   //and passed down.
+//   scrollViewProps: PropTypes.object,
+// };
