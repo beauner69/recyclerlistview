@@ -19,7 +19,7 @@
  * TODO: Solve //TSI
  */
 import debounce = require("lodash.debounce");
-import * as PropTypes from "prop-types";
+// import * as PropTypes from "prop-types";
 import * as React from "react";
 import { ObjectUtil, Default } from "ts-object-utils";
 import ContextProvider from "./dependencies/ContextProvider";
